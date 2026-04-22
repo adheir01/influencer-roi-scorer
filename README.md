@@ -7,8 +7,9 @@
 
 This project is part of a larger Marketing Decision Intelligence System:
 
-**Project 01:** [Instagram Fake Follower Detector](https://github.com/adheir01/instagram-fake-detector)
-**Project 02**  Influencer ROI Scorer
+-**Project 01:** [Instagram Fake Follower Detector](https://github.com/adheir01/instagram-fake-detector)
+-**Project 02**  Influencer ROI Scorer
+
 ---
 
 ## What it does
