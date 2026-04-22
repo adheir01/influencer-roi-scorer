@@ -200,7 +200,3 @@ GEMINI_API_KEY=your_gemini_key      # requires billing for >20 req/day
 |---|---|---|
 | 01 | Instagram Fake Follower Detector | ✅ Done |
 | **02** | **Influencer ROI Scorer** | **This repo** |
-| 03 | E-commerce Funnel + Cohort Dashboard | Planned |
-| 04 | Dockerized Airflow + dbt Pipeline | Planned |
-| 05 | Energy / Sustainability Analytics | Planned |
-| 06 | Engagement Anomaly Dashboard | Planned |
