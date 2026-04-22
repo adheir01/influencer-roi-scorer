@@ -200,3 +200,7 @@ GEMINI_API_KEY=your_gemini_key      # requires billing for >20 req/day
 |---|---|---|
 | 01 | Instagram Fake Follower Detector | ✅ Done |
 | **02** | **Influencer ROI Scorer** | **This repo** |
+
+## Disclaimer
+
+This project is for educational purposes only. All data is collected via official Apify actors interacting with publicly available Instagram data. Users are responsible for ensuring compliance with Instagram's Terms of Service and applicable data protection laws.
