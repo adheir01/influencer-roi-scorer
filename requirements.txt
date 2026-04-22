@@ -1,0 +1,9 @@
+streamlit>=1.35.0
+psycopg2-binary>=2.9.9
+pandas>=2.2.3
+numpy>=2.2.6
+plotly>=5.21.0
+google-generativeai>=0.5.4
+apify-client>=1.7.1
+dbt-postgres>=1.8.0
+python-dotenv>=1.0.1

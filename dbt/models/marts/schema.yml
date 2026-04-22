@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: mart_influencer_roi
+    description: >
+      Core ROI mart. One row per (campaign_id, username).
+      Weights signals by campaign goal and ranks influencers within campaign.
+    columns:
+      - name: campaign_id
+        tests: [not_null]
+      - name: username
+        tests: [not_null]
+      - name: composite_roi_score
+        description: "0-100 weighted blend of goal score + cost efficiency"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: roi_rank
+        tests: [not_null]
+      - name: engagement_rate_pct
+        description: "Engagement rate as percentage (e.g. 3.5 = 3.5%)"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: fake_follower_pct
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+
+  - name: mart_campaign_summary
+    description: "Campaign-level rollup. One row per campaign_id."
+    columns:
+      - name: campaign_id
+        tests: [unique, not_null]
+      - name: influencer_count
+        tests: [not_null]

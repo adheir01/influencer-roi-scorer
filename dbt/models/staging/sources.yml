@@ -1,0 +1,47 @@
+version: 2
+
+sources:
+  - name: public
+    description: "Raw tables from Project 01 (instagram_fake_detector) + Project 02 extensions"
+    schema: public
+
+    tables:
+      # ─── Project 01 tables (read-only) ───────────────────────
+      - name: profiles
+        description: "Instagram profile snapshots from Apify scraper"
+        columns:
+          - name: id
+            tests: [unique, not_null]
+          - name: username
+            tests: [not_null]
+          - name: engagement_rate
+            description: "Decimal 0-1; tiered computation in P01 pipeline"
+          - name: authenticity_score
+            description: "P01 rule-based score 0-100"
+
+      - name: posts
+        description: "Post-level data from Apify fast-instagram-post-scraper"
+        columns:
+          - name: id
+            tests: [unique, not_null]
+          - name: username
+            tests: [not_null]
+
+      # ─── Project 02 tables ────────────────────────────────────
+      - name: campaigns
+        description: "Brand campaigns being scored"
+        columns:
+          - name: campaign_id
+            tests: [unique, not_null]
+
+      - name: campaign_influencers
+        description: "Many-to-many: which influencers are in which campaigns"
+        columns:
+          - name: ci_id
+            tests: [unique, not_null]
+
+      - name: niche_scores
+        description: "LLM-generated niche + audience fit scores per username"
+
+      - name: roi_scores
+        description: "Computed ROI scores — written by scoring engine, read by Streamlit"

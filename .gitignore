@@ -1,0 +1,10 @@
+.env
+__pycache__/
+*.pyc
+.streamlit/
+dbt/target/
+dbt/dbt_packages/
+dbt/logs/
+*.egg-info/
+.venv/
+venv/
