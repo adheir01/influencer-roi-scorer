@@ -1,28 +1,51 @@
 # Influencer ROI Scorer 
 
+> Rank Instagram influencers by expected ROI before you spend budget.
 
+A decision-support system for evaluating and ranking influencers based on campaign ROI, combining engagement signals, audience authenticity, and cost efficiency into a unified scoring framework.
+ 
+Built by [Tobi](https://github.com/adheir01).
 
-> A decision-support system for evaluating and ranking influencers based on campaign ROI, combining engagement signals, audience authenticity, and cost efficiency into a unified scoring framework.
- Built by [Tobi](https://github.com/adheir01).
-
-This project is part of a larger Marketing Decision Intelligence System:
+This project is part of a broader Marketing Decision Intelligence System:
 
   - **Project 01:** [Instagram Fake Follower Detector](https://github.com/adheir01/instagram-fake-detector)
   - **Project 02**  Influencer ROI Scorer
 
 ---
 
+## Example Outcome
+
+- **Top pick:** @juliaalinaschlr — ROI score 79  
+- **Alternatives:** @t0bygpunk, @kandie_gang (higher engagement, lower reach)
+
+**Key insight:**
+> Micro-influencers show ~3× higher engagement rates (11% vs 3%), but require coordination due to smaller reach.  
+> The top-ranked influencer balances reach and efficiency, delivering the highest overall ROI.
+
+----
+
+## Application Preview
+
+### Decision View (Operational Tool)
+![App Screenshot](./assets/app_decision.png)
+
+### Analytics Layer (Metabase Dashboard)
+![Metabase Dashboard](./assets/metabase_dashboard.png)
+
+----
+
 ## What it does
 
 Input a campaign goal, budget, and 3–5 Instagram handles. The system then:
       
 **Create a data pipeline**    
-  - Scrapes fresh profile and post data via Apify (two actors — profile scraper + post scraper, joined on username)    
+  - Pulls live instagram profile + post data via Apify (two actors — profile scraper + post scraper, joined on username)    
   - Computes engagement rate + authenticity signals
  
 **Scoring Layer**
-  - Applies goal-weighted ROI model
-  - Estimates CPM, CPE, and composite ROI score
+  - Scores audience quality, niche fit, and brand safety (LLM-assisted)
+  - Applies goal-weighted ROI model that estimates CPM, CPE, and composite ROI score
+  - Ranks influencers and generates an executive summary
  
 **Analytics layer**  
   - Stores results in PostgreSQL
@@ -93,14 +116,14 @@ dbt/models/
 This project implements a full analytics engineering workflow:
     - Raw data ingestion from external APIs
     - Transformaton and modelling using dbt (staging → marts)
-    - Servng clean, analysis-ready tables to BI tools
+    - Serve a clean, analysis-ready tables to BI tools
     - Supporting repeatable campaign-level analysis
 
-The goal is to reflect how modern data teams structure pipelines for reliable decision-making, rather than relying on ad-hoc scripts or notebooks
+The goal is to reflect structured pipelines for reliable decision-making, rather than relying on ad-hoc scripts or notebooks
 
 ---
 
-## ROI Formula
+## ROI Model
 
 ```
 composite_roi_score = goal_adjusted_score × 0.70 + budget_efficiency_bonus (max 30)
@@ -115,9 +138,14 @@ Goal weights by campaign type:
 | Conversion | Niche fit 40% · ER 35% · brand safety 25% |
 | Follower Growth | Reach 40% · niche fit 35% · authenticity 25% |
 
-Budget efficiency bonus: CPM ≤ €5 → +30pts, ≤ €15 → +20pts, ≤ €30 → +10pts
+Budget efficiency bonus: 
+- CPM ≤ €5 → +30pts
+- CPM ≤ €15 → +20pts
+- CPM ≤ €30 → +10pts
 
-The model separates peformances (70%) from cost efficiency (30%) to reflect real-world campaign trade-offs: high engagement is valuable, but only if achieved ar a sustainable cost.
+The model separates peformances (70%) from cost efficiency (30%) to reflect real-world campaign trade-offs: high engagement is valuable, but only if achieved at a sustainable cost.
+
+> Weights are heuristic and can be tuned depending on campaign objectives.
 
 ---
 
@@ -170,37 +198,15 @@ docker-compose up -d metabase
 
 ---
 
-## Environment Variables
-
-```bash
-POSTGRES_HOST=localhost
-POSTGRES_PORT=5433        # 5433 to avoid conflict with P01
-POSTGRES_DB=postgres
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=your_password
-
-APIFY_API_TOKEN=your_apify_token    # same as Project 01
-GEMINI_API_KEY=your_gemini_key      # requires billing for >20 req/day
-```
-
----
-
 ## Known Limitations
 
-- Ghost follower estimate is heuristic — uses tiered expected engagement rate model, not actual follower analysis
-- Private accounts lose confidence — engagement rate cannot be computed
-- Gemini niche scoring requires billing enabled — free tier is 20 requests/day
-- dbt runs inside Docker container — requires dbt-postgres installed in the image
-- ER varies by niche — fitness accounts naturally have higher ER than news accounts; the tiered model partially accounts for this
+- Ghost follower estimate is heuristic  (engagement-based, not true follower audit)
+- Private accounts lose confidence; engagement rate cannot be computed
+- Gemini niche scoring requires billing enabled; free tier is 20 requests/day
+- dbt runs inside Docker container; requires dbt-postgres installed in the image
+- ER varies by niche, fitness accounts naturally have higher ER than news accounts; the tiered model partially accounts for this
 
 ---
-
-## Project Roadmap
-
-| # | Project | Status |
-|---|---|---|
-| 01 | Instagram Fake Follower Detector | ✅ Done |
-| **02** | **Influencer ROI Scorer** | **This repo** |
 
 ## Disclaimer
 
