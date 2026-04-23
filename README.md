@@ -118,6 +118,7 @@ Goal weights by campaign type:
 Budget efficiency bonus: CPM ≤ €5 → +30pts, ≤ €15 → +20pts, ≤ €30 → +10pts
 
 The model separates peformances (70%) from cost efficiency (30%) to reflect real-world campaign trade-offs: high engagement is valuable, but only if achieved ar a sustainable cost.
+
 ---
 
 ## Metabase Dashboard
