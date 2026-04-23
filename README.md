@@ -27,10 +27,10 @@ This project is part of a broader Marketing Decision Intelligence System:
 ## Application Preview
 
 ### Decision View (Operational Tool)
-![App Screenshot](./assets/app_decision.png)
+![App Screenshot](docs/app_decision.png) 
 
 ### Analytics Layer (Metabase Dashboard)
-![Metabase Dashboard](./assets/metabase_dashboard.png)
+![Metabase Dashboard](docs/metabase_dashboard.png)
 
 ----
 
